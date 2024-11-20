@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - TeleMed</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px;
+    text-align: center;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    padding: 5px 10px;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+main {
+    padding: 20px;
+}
+
+section {
+    background: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    border-bottom: 2px solid #4CAF50;
+    padding-bottom: 10px;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+form label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+form input {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+form button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #45a049;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+table tr:hover {
+    background-color: #f1f1f1;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+footer p {
+    margin: 5px 0;
+}
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Admin Dashboard</h1>
+        <nav>
+            <ul>
+                <li><a href="#manage-patients">Manage Patients</a></li>
+                <li><a href="#manage-doctors">Manage Doctors</a></li>
+                <li><a href="#manage-appointments">Manage Appointments</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="manage-patients">
+            <h2>Manage Patients</h2>
+            <form id="patient-form">
+                <label for="patient-name">Full Name:</label>
+                <input type="text" id="patient-name" name="patient-name" required>
+
+                <label for="patient-email">Email:</label>
+                <input type="email" id="patient-email" name="patient-email" required>
+
+                <button type="submit">Add Patient</button>
+            </form>
+
+            <h3>Patient List</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="patient-list">
+                </tbody>
+            </table>
+        </section>
+
+        <section id="manage-doctors">
+            <h2>Manage Doctors</h2>
+            <form id="doctor-form">
+                <label for="doctor-name">Full Name:</label>
+                <input type="text" id="doctor-name" name="doctor-name" required>
+
+                <label for="doctor-specialization">Specialization:</label>
+                <input type="text" id="doctor-specialization" name="doctor-specialization" required>
+
+                <button type="submit">Add Doctor</button>
+            </form>
+
+            <h3>Doctor List</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Specialization</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="doctor-list">
+                </tbody>
+            </table>
+        </section>
+
+        <section id="manage-appointments">
+            <h2>Manage Appointments</h2>
+            <h3>Upcoming Appointments</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Patient</th>
+                        <th>Doctor</th>
+                        <th>Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="appointment-list">
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 TeleMed. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        function createRow(data, deleteCallback) {
+            const row = document.createElement('tr');
+            data.forEach(item => {
+                const cell = document.createElement('td');
+                cell.textContent = item;
+                row.appendChild(cell);
+            });
+
+            const deleteCell = document.createElement('td');
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Delete';
+            deleteButton.classList.add('delete');
+            deleteButton.addEventListener('click', deleteCallback);
+            deleteCell.appendChild(deleteButton);
+            row.appendChild(deleteCell);
+
+            return row;
+        }
+
+        document.getElementById('patient-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('patient-name').value;
+            const email = document.getElementById('patient-email').value;
+
+            const patientData = [name, email];
+            const patientRow = createRow(patientData, function() {
+                patientRow.remove();
+            });
+
+            document.getElementById('patient-list').appendChild(patientRow);
+
+            document.getElementById('patient-form').reset();
+        });
+
+        document.getElementById('doctor-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('doctor-name').value;
+            const specialization = document.getElementById('doctor-specialization').value;
+
+            const doctorData = [name, specialization];
+            const doctorRow = createRow(doctorData, function() {
+                doctorRow.remove();
+            });
+
+            document.getElementById('doctor-list').appendChild(doctorRow);
+
+            document.getElementById('doctor-form').reset();
+        });
+
+        function addAppointment(patientName, doctorName, date) {
+            const appointmentData = [patientName, doctorName, date];
+            const appointmentRow = createRow(appointmentData, function() {
+                appointmentRow.remove();
+            });
+
+            document.getElementById('appointment-list').appendChild(appointmentRow);
+        }
+
+        addAppointment("John Doe", "Dr. Smith", "2024-12-01");
+
+    </script>
+
+</body>
+</html>

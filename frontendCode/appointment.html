@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment Booking</title>
+    <link rel="stylesheet" href="styles.css"> 
+    <style>
+        /* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+h1, h2 {
+    margin: 0;
+}
+
+/* Main Content */
+main {
+    padding: 20px;
+}
+
+/* Appointment Form */
+section {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+select, input {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Upcoming Appointments Table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+td {
+    background-color: white;
+}
+
+td button {
+    margin-right: 5px;
+}
+
+td button.cancel {
+    background-color: #f44336;
+}
+
+td button.cancel:hover {
+    background-color: #e53935;
+}
+
+td button.reschedule {
+    background-color: #2196F3;
+}
+
+td button.reschedule:hover {
+    background-color: #1976D2;
+}
+
+/* Footer */
+footer {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+footer p {
+    margin: 5px 0;
+}
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Appointment Booking</h1>
+    </header>
+
+    <main>
+        <!-- Create Appointment Section -->
+        <section>
+            <h2>Book an Appointment</h2>
+            <form id="appointment-form">
+                <label for="doctor">Select Doctor:</label>
+                <select id="doctor" name="doctor" required>
+                    <option value="">--Select a Doctor--</option>
+                    <option value="doctor1">Dr. Smith</option>
+                    <option value="doctor2">Dr. Johnson</option>
+                    <option value="doctor3">Dr. Lee</option>
+                </select>
+
+                <label for="date">Select Date:</label>
+                <input type="date" id="date" name="date" required>
+
+                <label for="time">Select Time:</label>
+                <input type="time" id="time" name="time" required>
+
+                <button type="submit">Book Appointment</button>
+            </form>
+        </section>
+
+        <!-- Upcoming Appointments Section -->
+        <section>
+            <h2>Your Upcoming Appointments</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Doctor</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Dr. Smith</td>
+                        <td>2024-11-01</td>
+                        <td>10:00 AM</td>
+                        <td>Scheduled</td>
+                        <td>
+                            <button class="reschedule">Reschedule</button>
+                            <button class="cancel">Cancel</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Dr. Johnson</td>
+                        <td>2024-11-05</td>
+                        <td>02:00 PM</td>
+                        <td>Scheduled</td>
+                        <td>
+                            <button class="reschedule">Reschedule</button>
+                            <button class="cancel">Cancel</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 TeleMed. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // Add JavaScript for handling form submission and button actions if needed
+        document.getElementById('appointment-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            // Logic to handle appointment booking
+            alert('Appointment booked!');
+        });
+
+        document.querySelectorAll('.cancel').forEach(button => {
+            button.addEventListener('click', function() {
+                const row = button.closest('tr');
+                row.cells[3].innerText = 'Canceled'; // Update status
+                // Logic to handle appointment cancellation in the backend
+            });
+        });
+
+        document.querySelectorAll('.reschedule').forEach(button => {
+            button.addEventListener('click', function() {
+                // Logic to handle rescheduling (e.g., open a modal)
+                alert('Reschedule functionality to be implemented.');
+            });
+        });
+    </script>
+
+</body>
+</html>
